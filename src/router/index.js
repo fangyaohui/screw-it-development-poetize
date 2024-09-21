@@ -21,6 +21,10 @@ const routes = [
       name: "sort",
       component: () => import('../components/sort')
     }, {
+      path: '/postEdit',
+      name: 'postEdit',
+      component: () => import('../components/postEdit')
+    },{
       path: "/article/:id",
       name: "article",
       component: () => import('../components/article')
@@ -83,11 +87,13 @@ const routes = [
       path: '/postList',
       name: 'postList',
       component: () => import('../components/admin/postList')
-    }, {
-      path: '/postEdit',
-      name: 'postEdit',
-      component: () => import('../components/admin/postEdit')
-    }, {
+    }, 
+    // {
+    //   path: '/postEdit',
+    //   name: 'postEdit',
+    //   component: () => import('../components/admin/postEdit')
+    // },
+    {
       path: '/sortList',
       name: 'sortList',
       component: () => import('../components/admin/sortList')

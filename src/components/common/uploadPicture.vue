@@ -1,20 +1,8 @@
 <template>
   <div>
-    <el-upload
-      class="upload-demo"
-      ref="upload"
-      multiple
-      drag
-      :action="$store.state.sysConfig.qiniuUrl"
-      :on-change="handleChange"
-      :before-upload="beforeUpload"
-      :on-success="handleSuccess"
-      :on-error="handleError"
-      :on-remove="handleRemove"
-      :http-request="customUpload"
-      :list-type="listType"
-      :accept="accept"
-      :limit="maxNumber"
+    <el-upload class="upload-demo" ref="upload" multiple drag :action="$store.state.sysConfig.qiniuUrl"
+      :on-change="handleChange" :before-upload="beforeUpload" :on-success="handleSuccess" :on-error="handleError"
+      :on-remove="handleRemove" :http-request="customUpload" :list-type="listType" :accept="accept" :limit="maxNumber"
       :auto-upload="false">
       <div class="el-upload__text">
         <svg viewBox="0 0 1024 1024" width="40" height="40">
@@ -83,7 +71,7 @@
       }
     },
 
-    data() {
+    data () {
       return {}
     },
 
@@ -91,19 +79,21 @@
 
     watch: {},
 
-    created() {
+    created () {
     },
 
-    mounted() {
+    mounted () {
 
     },
 
     methods: {
-      submitUpload() {
+      submitUpload () {
+        // this.$refs.upload.submit();
         this.$refs.upload.submit();
       },
 
-      customUpload(options) {
+      customUpload (options) {
+        // alert("fang")
         let suffix = "";
         if (options.file.name.lastIndexOf('.') !== -1) {
           suffix = options.file.name.substring(options.file.name.lastIndexOf('.'));
@@ -111,6 +101,8 @@
 
         let key = this.prefix + "/" + (!this.$common.isEmpty(this.$store.state.currentUser.username) ? (this.$store.state.currentUser.username.replace(/[^a-zA-Z]/g, '') + this.$store.state.currentUser.id) : (this.$store.state.currentAdmin.username.replace(/[^a-zA-Z]/g, '') + this.$store.state.currentAdmin.id)) + new Date().getTime() + Math.floor(Math.random() * 1000) + suffix;
 
+        this.storeType = "local"
+        // alert(this.storeType)
         if (this.storeType === "local") {
           let fd = new FormData();
           fd.append("file", options.file);
@@ -120,7 +112,7 @@
           fd.append("type", this.prefix);
           fd.append("storeType", this.storeType);
 
-          return this.$http.upload(this.$constant.baseURL + "/resource/upload", fd, this.isAdmin, options);
+          return this.$http.upload(this.$constant.baseURL + "/blog/resource/uploadImage", fd, this.isAdmin, options);
         } else if (this.storeType === "qiniu") {
           const xhr = new XMLHttpRequest();
           xhr.open('get', this.$constant.baseURL + "/qiniu/getUpToken?key=" + key, false);
@@ -151,7 +143,7 @@
       },
 
       // 文件上传成功时的钩子
-      handleSuccess(response, file, fileList) {
+      handleSuccess (response, file, fileList) {
         let url;
         if (this.storeType === "local") {
           url = response.data;
@@ -161,20 +153,20 @@
         }
         this.$emit("addPicture", url);
       },
-      handleError(err, file, fileList) {
+      handleError (err, file, fileList) {
         this.$message({
           message: err,
           type: "error"
         });
       },
       // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传
-      beforeUpload(file) {
+      beforeUpload (file) {
       },
       // 文件列表移除文件时的钩子
-      handleRemove(file, fileList) {
+      handleRemove (file, fileList) {
       },
       // 添加文件、上传成功和上传失败时都会被调用
-      handleChange(file, fileList) {
+      handleChange (file, fileList) {
         let flag = false;
 
         if (file.size > this.maxSize * 1024 * 1024) {

@@ -28,9 +28,9 @@
             </li>
 
             <el-dropdown :hide-timeout="500" placement="bottom">
-              <li>
+              <li @click="$router.push({path: '/postEdit'})">
                 <div class="my-menu">
-                  📒 <span>记录</span>
+                  📒 <span>上传博客</span>
                 </div>
               </li>
               <el-dropdown-menu slot="dropdown">
@@ -179,7 +179,7 @@
 
           <li>
             <div>
-              📒 <span>记录</span>
+              📒 <span>上传博客</span>
             </div>
             <div>
               <div v-for="(menu, index) in sortInfo" :key="index" class="sortMenu"

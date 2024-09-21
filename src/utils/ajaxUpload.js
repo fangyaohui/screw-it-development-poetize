@@ -25,6 +25,7 @@ function getBody(xhr) {
 }
 
 export default function upload(option) {
+  
   const xhr = new XMLHttpRequest();
   const action = option.action;
 

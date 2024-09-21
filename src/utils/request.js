@@ -12,6 +12,10 @@ axios.defaults.baseURL = constant.baseURL;
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
+  const token = localStorage.getItem('userToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 }, function (error) {
   // 对请求错误做些什么
@@ -42,15 +46,15 @@ axios.interceptors.response.use(function (response) {
 
 
 export default {
-  post(url, params = {}, isAdmin = false, json = true) {
+  post (url, params = {}, isAdmin = false, json = true) {
     let config;
     if (isAdmin) {
       config = {
-        headers: {"Authorization": localStorage.getItem("adminToken")}
+        headers: { "Authorization": localStorage.getItem("adminToken") }
       };
     } else {
       config = {
-        headers: {"Authorization": localStorage.getItem("userToken")}
+        headers: { "Authorization": localStorage.getItem("userToken") }
       };
     }
 
@@ -66,12 +70,12 @@ export default {
     });
   },
 
-  get(url, params = {}, isAdmin = false) {
+  get (url, params = {}, isAdmin = false) {
     let headers;
     if (isAdmin) {
-      headers = {"Authorization": localStorage.getItem("adminToken")};
+      headers = { "Authorization": localStorage.getItem("adminToken") };
     } else {
-      headers = {"Authorization": localStorage.getItem("userToken")};
+      headers = { "Authorization": localStorage.getItem("userToken") };
     }
 
     return new Promise((resolve, reject) => {
@@ -86,16 +90,16 @@ export default {
     });
   },
 
-  upload(url, param, isAdmin = false, option) {
+  upload (url, param, isAdmin = false, option) {
     let config;
     if (isAdmin) {
       config = {
-        headers: {"Authorization": localStorage.getItem("adminToken"), "Content-Type": "multipart/form-data"},
+        headers: { "Authorization": localStorage.getItem("adminToken"), "Content-Type": "multipart/form-data" },
         timeout: 60000
       };
     } else {
       config = {
-        headers: {"Authorization": localStorage.getItem("userToken"), "Content-Type": "multipart/form-data"},
+        headers: { "Authorization": localStorage.getItem("userToken"), "Content-Type": "multipart/form-data" },
         timeout: 60000
       };
     }
@@ -120,9 +124,9 @@ export default {
     });
   },
 
-  uploadQiniu(url, param) {
+  uploadQiniu (url, param) {
     let config = {
-      headers: {"Content-Type": "multipart/form-data"},
+      headers: { "Content-Type": "multipart/form-data" },
       timeout: 60000
     };
 
