@@ -64,7 +64,7 @@
             :src="article.articleCover" fit="cover"></el-image>
         </div>
         <uploadPicture :isAdmin="true" :prefix="'articleCover'" style="margin-top: 10px" @addPicture="addArticleCover"
-          :maxSize="2" :maxNumber="1"></uploadPicture>
+          :maxSize="20" :maxNumber="1"></uploadPicture>
       </el-form-item>
       <el-form-item label="分类" prop="sortId">
         <el-select v-model="article.sortId" placeholder="请选择分类">
@@ -277,7 +277,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             if (this.$common.isEmpty(this.id)) {
-              this.saveArticle(this.article, "/article/saveArticle")
+              this.saveArticle(this.article, "/blog/article/saveArticle")
             } else {
               this.article.id = this.id;
               this.saveArticle(this.article, "/article/updateArticle")
@@ -309,7 +309,7 @@
                 message: "保存成功！",
                 type: "success"
               });
-              this.$router.push({ path: '/postList' });
+              this.$router.push({ path: '/postEdit' });
             })
             .catch((error) => {
               this.$message({

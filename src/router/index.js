@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
+VueRouter.prototype.push = function push (location) {
   return originalPush.call(this, location).catch(err => err);
 }
 
@@ -24,7 +24,11 @@ const routes = [
       path: '/postEdit',
       name: 'postEdit',
       component: () => import('../components/postEdit')
-    },{
+    }, {
+      path: '/batchAddBlogImage',
+      name: 'batchAddBlogImage',
+      component: () => import('../components/batchAddBlogImage')
+    }, {
       path: "/article/:id",
       name: "article",
       component: () => import('../components/article')
@@ -65,7 +69,7 @@ const routes = [
   {
     path: '/admin',
     redirect: '/welcome',
-    meta: {requiresAuth: true},
+    meta: { requiresAuth: true },
     component: () => import('../components/admin/admin'),
     children: [{
       path: '/welcome',
@@ -87,7 +91,7 @@ const routes = [
       path: '/postList',
       name: 'postList',
       component: () => import('../components/admin/postList')
-    }, 
+    },
     // {
     //   path: '/postEdit',
     //   name: 'postEdit',
@@ -133,8 +137,8 @@ const routes = [
 const router = new VueRouter({
   mode: "history",
   routes: routes,
-  scrollBehavior(to, from, savedPosition) {
-    return {x: 0, y: 0}
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
   }
 })
 
@@ -143,7 +147,7 @@ router.beforeEach((to, from, next) => {
     if (!Boolean(localStorage.getItem("adminToken"))) {
       next({
         path: '/verify',
-        query: {redirect: to.fullPath}
+        query: { redirect: to.fullPath }
       });
     } else {
       next();

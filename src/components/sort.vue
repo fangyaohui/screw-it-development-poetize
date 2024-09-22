@@ -9,11 +9,9 @@
       <!-- 标签 -->
       <div class="sort-warp shadow-box" v-if="!$common.isEmpty(sort) && !$common.isEmpty(sort.labels)">
         <div v-for="(label, index) in sort.labels" :key="index"
-             :class="{isActive: !$common.isEmpty(labelId) && parseInt(labelId) === label.id}"
-             @click="listArticle(label)">
+          :class="{isActive: !$common.isEmpty(labelId) && parseInt(labelId) === label.id}" @click="listArticle(label)">
           <proTag :info="label.labelName+' '+label.countOfLabel"
-                  :color="$constant.before_color_list[Math.floor(Math.random() * 6)]"
-                  style="margin: 12px">
+            :color="$constant.before_color_list[Math.floor(Math.random() * 6)]" style="margin: 12px">
           </proTag>
         </div>
       </div>
@@ -37,10 +35,10 @@
 </template>
 
 <script>
-  const twoPoem = () => import( "./common/twoPoem");
-  const proTag = () => import( "./common/proTag");
-  const articleList = () => import( "./articleList");
-  const myFooter = () => import( "./common/myFooter");
+  const twoPoem = () => import("./common/twoPoem");
+  const proTag = () => import("./common/proTag");
+  const articleList = () => import("./articleList");
+  const myFooter = () => import("./common/myFooter");
 
   export default {
     components: {
@@ -50,7 +48,7 @@
       myFooter
     },
 
-    data() {
+    data () {
       return {
         sortId: this.$route.query.sortId,
         labelId: this.$route.query.labelId,
@@ -70,7 +68,7 @@
     computed: {},
 
     watch: {
-      $route() {
+      $route () {
         this.pagination = {
           current: 1,
           size: 10,
@@ -87,21 +85,21 @@
       }
     },
 
-    created() {
+    created () {
       this.getSort();
       this.getArticles();
     },
 
-    mounted() {
+    mounted () {
     },
 
     methods: {
-      pageArticles() {
+      pageArticles () {
         this.pagination.current = this.pagination.current + 1;
         this.getArticles();
       },
 
-      getSort() {
+      getSort () {
         let sortInfo = this.$store.state.sortInfo;
         if (!this.$common.isEmpty(sortInfo)) {
           let sortArray = sortInfo.filter(f => {
@@ -112,7 +110,7 @@
           }
         }
       },
-      listArticle(label) {
+      listArticle (label) {
         this.labelId = label.id;
         this.pagination = {
           current: 1,
@@ -127,8 +125,8 @@
           this.getArticles();
         });
       },
-      getArticles() {
-        this.$http.post(this.$constant.baseURL + "/article/listArticle", this.pagination)
+      getArticles () {
+        this.$http.post(this.$constant.baseURL + "/blog/article/getListArticle", this.pagination)
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.articles = this.articles.concat(res.data.records);
@@ -147,7 +145,6 @@
 </script>
 
 <style scoped>
-
   .sort-warp {
     width: 70%;
     max-width: 780px;

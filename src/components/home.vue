@@ -34,9 +34,9 @@
                 </div>
               </li>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="(sort, index) in sortInfo" :key="index">
-                  <div @click="$router.push({path: '/sort', query: {sortId: sort.id}})">
-                    {{sort.sortName}}
+                <el-dropdown-item>
+                  <div @click="$router.push({path: '/batchAddBlogImage'})">
+                    批量上传博客图片
                   </div>
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -182,9 +182,8 @@
               📒 <span>上传博客</span>
             </div>
             <div>
-              <div v-for="(menu, index) in sortInfo" :key="index" class="sortMenu"
-                @click="smallMenu({path: '/sort', query: {sortId: menu.id}})">
-                {{menu.sortName}}
+              <div class="sortMenu" @click="smallMenu({path: '/sort', query: {sortId: menu.id}})">
+                批量上传博客图片
               </div>
             </div>
           </li>
@@ -398,7 +397,7 @@
         this.$router.push({ path: '/' });
       },
       getWebInfo () {
-        this.$http.get(this.$constant.baseURL + "/webInfo/getWebInfo")
+        this.$http.get(this.$constant.baseURL + "/blog/webInfo/getWebInfo")
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.$store.commit("loadWebInfo", res.data);
@@ -413,7 +412,7 @@
           });
       },
       getSysConfig () {
-        this.$http.get(this.$constant.baseURL + "/sysConfig/listSysConfig")
+        this.$http.get(this.$constant.baseURL + "/blog/sysConfig/getListSysConfig")
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.$store.commit("loadSysConfig", res.data);
@@ -444,7 +443,7 @@
         document.fonts.add(font);
       },
       getSortInfo () {
-        this.$http.get(this.$constant.baseURL + "/webInfo/getSortInfo")
+        this.$http.get(this.$constant.baseURL + "/blog/sortLabel/getSortInfo")
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.$store.commit("loadSortInfo", res.data);

@@ -4,11 +4,7 @@
       <!-- 封面 -->
       <div class="article-head my-animation-slide-top">
         <!-- 背景图片 -->
-        <el-image class="article-image my-el-image"
-                  v-once
-                  lazy
-                  :src="article.articleCover"
-                  fit="cover">
+        <el-image class="article-image my-el-image" v-once lazy :src="article.articleCover" fit="cover">
           <div slot="error" class="image-slot">
             <div class="article-image"></div>
           </div>
@@ -49,8 +45,8 @@
             <span>&nbsp;{{ article.createTime }}</span>
             <span>·</span>
             <svg viewBox="0 0 1024 1024" width="14" height="14" style="vertical-align: -2px;">
-              <path d="M14.656 512a497.344 497.344 0 1 0 994.688 0 497.344 497.344 0 1 0-994.688 0z"
-                    fill="#FF0000"></path>
+              <path d="M14.656 512a497.344 497.344 0 1 0 994.688 0 497.344 497.344 0 1 0-994.688 0z" fill="#FF0000">
+              </path>
               <path
                 d="M374.976 872.64c-48.299-100.032-22.592-157.44 14.421-211.37 40.448-58.966 51.115-117.611 51.115-117.611s31.659 41.386 19.115 106.005c56.149-62.72 66.816-162.133 58.325-200.405 127.317 88.746 181.59 281.002 108.181 423.381C1016 652.501 723.093 323.2 672.277 285.867c16.939 37.333 20.054 100.032-14.101 130.474-58.027-219.84-201.664-265.002-201.664-265.002 16.96 113.536-61.781 237.397-137.344 330.24-2.816-45.163-5.632-76.544-29.483-119.808-5.333 82.176-68.373 149.269-85.29 231.445-22.912 111.637 17.237 193.173 170.581 279.424z"
                 fill="#FFFFFF"></path>
@@ -70,8 +66,8 @@
               <path
                 d="M619.008 632.32l101.888-35.157333-131.754667-76.117334 29.866667 111.274667zM891.904 148.992a61.44 61.44 0 0 0-84.138667 22.528l-19.968 34.133333 106.666667 61.610667 19.968-34.133333a61.781333 61.781333 0 0 0-22.528-84.138667z"
                 fill="#69BAF9"></path>
-              <path d="M775.338667 198.775467l131.669333 76.032-186.026667 322.218666-131.6864-76.032z"
-                    fill="#F7FBFF"></path>
+              <path d="M775.338667 198.775467l131.669333 76.032-186.026667 322.218666-131.6864-76.032z" fill="#F7FBFF">
+              </path>
               <path
                 d="M775.168 198.826667l-5.290667 9.216 59.221334 34.133333a34.133333 34.133333 0 0 1 12.458666 46.592l-139.946666 242.346667a34.133333 34.133333 0 0 1-46.762667 12.629333l-59.050667-34.133333-6.656 11.434666 88.746667 51.2L720.896 597.333333l186.026667-322.56z"
                 fill="#D8E3F0"></path>
@@ -99,9 +95,8 @@
           </div>
         </div>
 
-        <div class="article-info-news"
-             @click="weiYanDialogVisible = true"
-             v-if="!$common.isEmpty($store.state.currentUser) && $store.state.currentUser.id === article.userId">
+        <div class="article-info-news" @click="weiYanDialogVisible = true"
+          v-if="!$common.isEmpty($store.state.currentUser) && $store.state.currentUser.id === article.userId">
           <svg width="30" height="30" viewBox="0 0 1024 1024">
             <path d="M0 0h1024v1024H0V0z" fill="#202425" opacity=".01"></path>
             <path
@@ -117,8 +112,7 @@
       <div style="background: var(--background);">
         <div class="article-container my-animation-slide-bottom">
           <div v-if="!$common.isEmpty(article.videoUrl)" style="margin-bottom: 20px">
-            <videoPlayer :url="{src: $common.decrypt(article.videoUrl)}"
-                         :cover="article.articleCover">
+            <videoPlayer :url="{src: $common.decrypt(article.videoUrl)}" :cover="article.articleCover">
             </videoPlayer>
           </div>
 
@@ -141,7 +135,8 @@
           </div>
           <!-- 分类 -->
           <div class="article-sort">
-            <span @click="$router.push({path: '/sort', query: {sortId: article.sortId, labelId: article.labelId}})">{{ article.sort.sortName +" ▶ "+ article.label.labelName}}</span>
+            <span @click="$router.push({path: '/sort', query: {sortId: article.sortId, labelId: article.labelId}})">{{
+              article.sort.sortName +" ▶ "+ article.label.labelName}}</span>
           </div>
           <!-- 作者信息 -->
           <blockquote>
@@ -150,8 +145,7 @@
             </div>
             <div>
               <span>版权&许可请详阅</span>
-              <span style="color: #38f;cursor: pointer"
-                    @click="copyrightDialogVisible = true">
+              <span style="color: #38f;cursor: pointer" @click="copyrightDialogVisible = true">
                 版权声明
               </span>
             </div>
@@ -179,31 +173,33 @@
       <i class="fa fa-align-justify" aria-hidden="true"></i>
     </div>
 
-    <el-dialog title="版权声明"
-               :visible.sync="copyrightDialogVisible"
-               width="80%"
-               :append-to-body="true"
-               class="article-copy"
-               center>
+    <el-dialog title="版权声明" :visible.sync="copyrightDialogVisible" width="80%" :append-to-body="true"
+      class="article-copy" center>
       <div style="display: flex;align-items: center;flex-direction: column">
         <el-avatar shape="square" :size="35" :src="$store.state.webInfo.avatar"></el-avatar>
         <div class="copyright-container">
           <p>
-            {{ $store.state.webInfo.webName }}是指运行在{{ $constant.host }}域名及相关子域名上的网站，本条款描述了{{ $store.state.webInfo.webName }}的网站版权声明：
+            {{ $store.state.webInfo.webName }}是指运行在{{ $constant.host }}域名及相关子域名上的网站，本条款描述了{{
+            $store.state.webInfo.webName }}的网站版权声明：
           </p>
           <ul>
             <li>
-              {{ $store.state.webInfo.webName }}提供的所有文章、展示的图片素材等内容部分来源于互联网平台，仅供学习参考。如有侵犯您的版权，请联系{{ $store.state.webInfo.webName }}负责人，{{ $store.state.webInfo.webName }}承诺将在一个工作日内改正。
+              {{ $store.state.webInfo.webName }}提供的所有文章、展示的图片素材等内容部分来源于互联网平台，仅供学习参考。如有侵犯您的版权，请联系{{
+              $store.state.webInfo.webName }}负责人，{{ $store.state.webInfo.webName }}承诺将在一个工作日内改正。
             </li>
             <li>
-              {{ $store.state.webInfo.webName }}不保证网站内容的全部准确性、安全性和完整性，请您在阅读、下载及使用过程中自行确认，{{ $store.state.webInfo.webName }}亦不承担上述资源对您造成的任何形式的损失或伤害。
+              {{ $store.state.webInfo.webName }}不保证网站内容的全部准确性、安全性和完整性，请您在阅读、下载及使用过程中自行确认，{{ $store.state.webInfo.webName
+              }}亦不承担上述资源对您造成的任何形式的损失或伤害。
             </li>
             <li>未经{{ $store.state.webInfo.webName }}允许，不得盗链、盗用本站内容和资源。</li>
             <li>
-              {{ $store.state.webInfo.webName }}旨在为广大用户提供更多的信息；{{ $store.state.webInfo.webName }}不保证向用户提供的外部链接的准确性和完整性，该外部链接指向的不由本站实际控制的任何网页上的内容，{{ $store.state.webInfo.webName }}对其合法性亦概不负责，亦不承担任何法律责任。
+              {{ $store.state.webInfo.webName }}旨在为广大用户提供更多的信息；{{ $store.state.webInfo.webName
+              }}不保证向用户提供的外部链接的准确性和完整性，该外部链接指向的不由本站实际控制的任何网页上的内容，{{ $store.state.webInfo.webName }}对其合法性亦概不负责，亦不承担任何法律责任。
             </li>
             <li>
-              {{ $store.state.webInfo.webName }}中的文章/视频（包括转载文章/视频）的版权仅归原作者所有，若作者有版权声明或文章从其它网站转载而附带有原所有站的版权声明者，其版权归属以附带声明为准；文章仅代表作者本人的观点，与{{ $store.state.webInfo.webName }}立场无关。
+              {{ $store.state.webInfo.webName
+              }}中的文章/视频（包括转载文章/视频）的版权仅归原作者所有，若作者有版权声明或文章从其它网站转载而附带有原所有站的版权声明者，其版权归属以附带声明为准；文章仅代表作者本人的观点，与{{
+              $store.state.webInfo.webName }}立场无关。
             </li>
             <li>
               {{ $store.state.webInfo.webName }}自行编写排版的文章均采用
@@ -214,9 +210,8 @@
             <li>
               许可协议标识：
               <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-                <img alt="知识共享许可协议"
-                     src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"
-                     style="margin-top: 5px">
+                <img alt="知识共享许可协议" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"
+                  style="margin-top: 5px">
               </a>
             </li>
           </ul>
@@ -224,38 +219,22 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="最新进展"
-               :visible.sync="weiYanDialogVisible"
-               width="40%"
-               :append-to-body="true"
-               :close-on-click-modal="false"
-               destroy-on-close
-               center>
+    <el-dialog title="最新进展" :visible.sync="weiYanDialogVisible" width="40%" :append-to-body="true"
+      :close-on-click-modal="false" destroy-on-close center>
       <div>
         <div class="myCenter" style="margin-bottom: 20px">
-          <el-date-picker
-            v-model="newsTime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            type="datetime"
-            align="center"
+          <el-date-picker v-model="newsTime" value-format="yyyy-MM-dd HH:mm:ss" type="datetime" align="center"
             placeholder="选择日期时间">
           </el-date-picker>
         </div>
-        <commentBox :disableGraffiti="true"
-                    @submitComment="submitWeiYan">
+        <commentBox :disableGraffiti="true" @submitComment="submitWeiYan">
         </commentBox>
       </div>
     </el-dialog>
 
     <!-- 微信 -->
-    <el-dialog title="密码"
-               :modal="false"
-               :visible.sync="showPasswordDialog"
-               width="25%"
-               :append-to-body="true"
-               :close-on-click-modal="false"
-               destroy-on-close
-               center>
+    <el-dialog title="密码" :modal="false" :visible.sync="showPasswordDialog" width="25%" :append-to-body="true"
+      :close-on-click-modal="false" destroy-on-close center>
       <div>
         <div>
           <div class="password-content">{{tips}}</div>
@@ -264,10 +243,8 @@
           <el-input maxlength="30" v-model="password"></el-input>
         </div>
         <div style="display: flex;justify-content: center">
-          <proButton :info="'提交'"
-                     @click.native="submitPassword()"
-                     :before="$constant.before_color_2"
-                     :after="$constant.after_color_2">
+          <proButton :info="'提交'" @click.native="submitPassword()" :before="$constant.before_color_2"
+            :after="$constant.after_color_2">
           </proButton>
         </div>
       </div>
@@ -276,12 +253,12 @@
 </template>
 
 <script>
-  const myFooter = () => import( "./common/myFooter");
-  const comment = () => import( "./comment/comment");
-  const process = () => import( "./common/process");
-  const commentBox = () => import( "./comment/commentBox");
-  const proButton = () => import( "./common/proButton");
-  const videoPlayer = () => import( "./common/videoPlayer");
+  const myFooter = () => import("./common/myFooter");
+  const comment = () => import("./comment/comment");
+  const process = () => import("./common/process");
+  const commentBox = () => import("./comment/commentBox");
+  const proButton = () => import("./common/proButton");
+  const videoPlayer = () => import("./common/videoPlayer");
   import MarkdownIt from 'markdown-it';
 
   export default {
@@ -294,7 +271,7 @@
       videoPlayer
     },
 
-    data() {
+    data () {
       return {
         id: this.$route.params.id,
         subscribe: false,
@@ -310,7 +287,7 @@
         scrollTop: 0
       };
     },
-    created() {
+    created () {
       if (!this.$common.isEmpty(this.id)) {
         this.getArticle(localStorage.getItem("article_password_" + this.id));
 
@@ -325,14 +302,14 @@
         }
       }
     },
-    mounted() {
+    mounted () {
       window.addEventListener("scroll", this.onScrollPage);
     },
-    destroyed() {
+    destroyed () {
       window.removeEventListener("scroll", this.onScrollPage);
     },
     watch: {
-      scrollTop(scrollTop, oldScrollTop) {
+      scrollTop (scrollTop, oldScrollTop) {
         let isShow = scrollTop - window.innerHeight > 30;
         if (isShow) {
           $("#toc-button").css("bottom", "14.1vh");
@@ -342,7 +319,7 @@
       },
     },
     methods: {
-      clickTocButton() {
+      clickTocButton () {
         let display = $(".toc");
         if ("none" === display.css("display")) {
           display.css("display", "unset");
@@ -350,7 +327,7 @@
           display.css("display", "none");
         }
       },
-      subscribeLabel() {
+      subscribeLabel () {
         if (this.$common.isEmpty(this.$store.state.currentUser)) {
           this.$message({
             message: "请先登录！",
@@ -387,7 +364,7 @@
           });
         });
       },
-      submitPassword() {
+      submitPassword () {
         if (this.$common.isEmpty(this.password)) {
           this.$message({
             message: "请先输入密码！",
@@ -398,7 +375,7 @@
 
         this.getArticle(this.password);
       },
-      deleteTreeHole(id) {
+      deleteTreeHole (id) {
         if (this.$common.isEmpty(this.$store.state.currentUser)) {
           this.$message({
             message: "请先登录！",
@@ -413,7 +390,7 @@
           type: 'success',
           center: true
         }).then(() => {
-          this.$http.get(this.$constant.baseURL + "/weiYan/deleteWeiYan", {id: id})
+          this.$http.get(this.$constant.baseURL + "/weiYan/deleteWeiYan", { id: id })
             .then((res) => {
               this.$message({
                 type: 'success',
@@ -434,7 +411,7 @@
           });
         });
       },
-      submitWeiYan(content) {
+      submitWeiYan (content) {
         let weiYan = {
           content: content,
           createTime: this.newsTime,
@@ -454,7 +431,7 @@
             });
           });
       },
-      getNews() {
+      getNews () {
         this.$http.post(this.$constant.baseURL + "/weiYan/listNews", {
           current: 1,
           size: 9999,
@@ -478,7 +455,7 @@
             });
           });
       },
-      onScrollPage() {
+      onScrollPage () {
         this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         if (this.scrollTop < (window.innerHeight / 4)) {
           $(".toc").css("top", window.innerHeight / 4);
@@ -486,7 +463,7 @@
           $(".toc").css("top", "90px");
         }
       },
-      getTocbot() {
+      getTocbot () {
         let script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = this.$constant.tocbot;
@@ -508,17 +485,17 @@
           $(".toc").css("display", "none");
         }
       },
-      addId() {
+      addId () {
         let headings = $(".entry-content").find("h1, h2, h3, h4, h5, h6");
         headings.attr('id', (i, id) => id || 'toc-' + i);
       },
-      getArticle(password) {
-        this.$http.get(this.$constant.baseURL + "/article/getArticleById", {id: this.id, password: password})
+      getArticle (password) {
+        this.$http.get(this.$constant.baseURL + "/blog/article/getArticleById", { id: this.id, password: password })
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.article = res.data;
               this.getNews();
-              const md = new MarkdownIt({breaks: true}).use(require('markdown-it-multimd-table'));
+              const md = new MarkdownIt({ breaks: true }).use(require('markdown-it-multimd-table'));
               this.articleContentHtml = md.render(this.article.articleContent);
               this.$nextTick(() => {
                 this.$common.imgShow(".entry-content img");
@@ -558,7 +535,7 @@
             }
           });
       },
-      highlight() {
+      highlight () {
         let attributes = {
           autocomplete: "off",
           autocorrect: "off",
@@ -628,7 +605,6 @@
 </script>
 
 <style scoped>
-
   .article-head {
     height: 40vh;
     position: relative;
@@ -764,14 +740,14 @@
     left: calc(95% - 20px);
   }
 
-  .process-wrap >>> .el-collapse-item__header {
+  .process-wrap>>>.el-collapse-item__header {
     border-bottom: unset;
     font-size: 20px;
     background-color: var(--background);
     color: var(--lightGreen);
   }
 
-  .process-wrap >>> .el-collapse-item__wrap {
+  .process-wrap>>>.el-collapse-item__wrap {
     background-color: var(--background);
   }
 
@@ -780,7 +756,7 @@
     border-bottom: unset;
   }
 
-  .process-wrap >>> .el-collapse-item__wrap {
+  .process-wrap>>>.el-collapse-item__wrap {
     border-bottom: unset;
   }
 
