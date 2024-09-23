@@ -327,6 +327,11 @@
       },
     },
     created () {
+
+      // 判断是否登录
+      this.checkTokenStatus();
+
+
       let toolbarStatus = {
         enter: false,
         visible: true,
@@ -356,6 +361,51 @@
       }
     },
     methods: {
+
+      parseJwt (token) {
+        try {
+          const base64Url = token.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split('')
+              .map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+              })
+              .join('')
+          );
+          return JSON.parse(jsonPayload);
+        } catch (error) {
+          return null;
+        }
+      },
+
+      // 检查 token 是否过期
+      isTokenExpired (token) {
+        const decoded = this.parseJwt(token);
+        if (!decoded || !decoded.exp) {
+          return true; // 如果解析失败或没有exp字段，认为token已过期
+        }
+        const currentTime = Math.floor(Date.now() / 1000); // 当前时间（秒）
+        return decoded.exp < currentTime; // true表示token已过期
+      },
+
+      // 检查 token 并处理过期逻辑
+      checkTokenStatus () {
+        const token = localStorage.getItem('userToken'); // 从 localStorage 获取 token
+        if (token && !this.isTokenExpired(token)) {
+          console.log('Token 有效，可以继续操作');
+          this.token = token;
+        } else {
+          console.log('Token 已过期，重定向到登录页面');
+          localStorage.removeItem("userToken");
+          // 重定向到登录页面
+          this.$router.push('/user');
+        }
+      },
+
+
+
       smallMenu (data) {
         this.$router.push(data)
         this.toolbarDrawer = false;
