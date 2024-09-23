@@ -8,16 +8,15 @@
       <div>
         <!-- 文字评论 -->
         <div v-show="!isGraffiti">
-          <commentBox @showGraffiti="isGraffiti = !isGraffiti"
-                      @submitComment="submitComment">
+          <commentBox @showGraffiti="isGraffiti = !isGraffiti" @submitComment="submitComment">
           </commentBox>
         </div>
         <!-- 画笔 -->
-<!--        <div v-show="isGraffiti">-->
-<!--          <graffiti @showComment="isGraffiti = !isGraffiti"-->
-<!--                    @addGraffitiComment="addGraffitiComment">-->
-<!--          </graffiti>-->
-<!--        </div>-->
+        <!--        <div v-show="isGraffiti">-->
+        <!--          <graffiti @showComment="isGraffiti = !isGraffiti"-->
+        <!--                    @addGraffitiComment="addGraffitiComment">-->
+        <!--          </graffiti>-->
+        <!--        </div>-->
       </div>
     </div>
 
@@ -29,9 +28,7 @@
         <span>{{ total }} 条留言</span>
       </div>
       <!-- 评论详情 -->
-      <div id="comment-content" class="commentInfo-detail"
-           v-for="(item, index) in comments"
-           :key="index">
+      <div id="comment-content" class="commentInfo-detail" v-for="(item, index) in comments" :key="index">
         <!-- 头像 -->
         <el-avatar shape="square" class="commentInfo-avatar" :size="35" :src="item.avatar"></el-avatar>
 
@@ -81,8 +78,7 @@
             </div>
             <!-- 分页 -->
             <div class="pagination-wrap" v-if="item.childComments.records.length < item.childComments.total">
-              <div class="pagination"
-                   @click="toChildPage(item)">
+              <div class="pagination" @click="toChildPage(item)">
                 展开
               </div>
             </div>
@@ -90,12 +86,8 @@
         </div>
       </div>
       <!-- 分页 -->
-      <proPage :current="pagination.current"
-               :size="pagination.size"
-               :total="pagination.total"
-               :buttonSize="6"
-               :color="$constant.commentPageColor"
-               @toPage="toPage">
+      <proPage :current="pagination.current" :size="pagination.size" :total="pagination.total" :buttonSize="6"
+        :color="$constant.commentPageColor" @toPage="toPage">
       </proPage>
     </div>
 
@@ -103,17 +95,10 @@
       <i>来发第一个留言啦~</i>
     </div>
 
-    <el-dialog title="留言"
-               :visible.sync="replyDialogVisible"
-               width="30%"
-               :before-close="handleClose"
-               :append-to-body="true"
-               :close-on-click-modal="false"
-               destroy-on-close
-               center>
+    <el-dialog title="留言" :visible.sync="replyDialogVisible" width="30%" :before-close="handleClose"
+      :append-to-body="true" :close-on-click-modal="false" destroy-on-close center>
       <div>
-        <commentBox :disableGraffiti="true"
-                    @submitComment="submitReply">
+        <commentBox :disableGraffiti="true" @submitComment="submitReply">
         </commentBox>
       </div>
     </el-dialog>
@@ -122,8 +107,8 @@
 
 <script>
   // const graffiti = () => import( "./graffiti");
-  const commentBox = () => import( "./commentBox");
-  const proPage = () => import( "../common/proPage");
+  const commentBox = () => import("./commentBox");
+  const proPage = () => import("../common/proPage");
 
   export default {
     components: {
@@ -142,7 +127,7 @@
         type: Number
       }
     },
-    data() {
+    data () {
       return {
         isGraffiti: false,
         total: 0,
@@ -163,20 +148,20 @@
 
     computed: {},
 
-    created() {
+    created () {
       this.getComments(this.pagination);
       this.getTotal();
     },
     methods: {
-      toPage(page) {
+      toPage (page) {
         this.pagination.current = page;
         window.scrollTo({
           top: document.getElementById('comment-content').offsetTop
         });
         this.getComments(this.pagination);
       },
-      getTotal() {
-        this.$http.get(this.$constant.baseURL + "/comment/getCommentCount", {source: this.source, type: this.type})
+      getTotal () {
+        this.$http.get(this.$constant.baseURL + "/blog/comment/getCommentCount", { source: this.source, type: this.type })
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.total = res.data;
@@ -189,7 +174,7 @@
             });
           });
       },
-      toChildPage(floorComment) {
+      toChildPage (floorComment) {
         floorComment.childComments.current += 1;
         let pagination = {
           current: floorComment.childComments.current,
@@ -201,7 +186,7 @@
         }
         this.getComments(pagination, floorComment, true);
       },
-      emoji(comments, flag) {
+      emoji (comments, flag) {
         comments.forEach(c => {
           c.commentContent = c.commentContent.replace(/\n/g, '<br/>');
           c.commentContent = this.$common.faceReg(c.commentContent);
@@ -217,8 +202,8 @@
           }
         });
       },
-      getComments(pagination, floorComment = {}, isToPage = false) {
-        this.$http.post(this.$constant.baseURL + "/comment/listComment", pagination)
+      getComments (pagination, floorComment = {}, isToPage = false) {
+        this.$http.post(this.$constant.baseURL + "/blog/comment/getListComment", pagination)
           .then((res) => {
             if (!this.$common.isEmpty(res.data) && !this.$common.isEmpty(res.data.records)) {
               if (this.$common.isEmpty(floorComment)) {
@@ -246,17 +231,17 @@
             });
           });
       },
-      addGraffitiComment(graffitiComment) {
+      addGraffitiComment (graffitiComment) {
         this.submitComment(graffitiComment);
       },
-      submitComment(commentContent) {
+      submitComment (commentContent) {
         let comment = {
           source: this.source,
           type: this.type,
           commentContent: commentContent
         };
 
-        this.$http.post(this.$constant.baseURL + "/comment/saveComment", comment)
+        this.$http.post(this.$constant.baseURL + "/blog/comment/saveComment", comment)
           .then((res) => {
             this.$message({
               type: 'success',
@@ -280,7 +265,7 @@
             });
           });
       },
-      submitReply(commentContent) {
+      submitReply (commentContent) {
         let comment = {
           source: this.source,
           type: this.type,
@@ -292,7 +277,7 @@
 
         let floorComment = this.floorComment;
 
-        this.$http.post(this.$constant.baseURL + "/comment/saveComment", comment)
+        this.$http.post(this.$constant.baseURL + "/blog/comment/saveComment", comment)
           .then((res) => {
             let pagination = {
               current: 1,
@@ -313,12 +298,12 @@
           });
         this.handleClose();
       },
-      replyDialog(comment, floorComment) {
+      replyDialog (comment, floorComment) {
         this.replyComment = comment;
         this.floorComment = floorComment;
         this.replyDialogVisible = true;
       },
-      handleClose() {
+      handleClose () {
         this.replyDialogVisible = false;
         this.floorComment = {};
         this.replyComment = {};
@@ -328,7 +313,6 @@
 </script>
 
 <style scoped>
-
   .comment-head {
     display: flex;
     align-items: center;
