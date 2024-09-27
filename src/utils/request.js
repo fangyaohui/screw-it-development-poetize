@@ -5,8 +5,51 @@ import qs from "qs";
 
 import store from "../store";
 
+import CryptoJS from 'crypto-js';
 
+function encryptAES (data, secretKey) {
+  const secretKeyStr = CryptoJS.enc.Utf8.parse(secretKey);
+  const iv = CryptoJS.lib.WordArray.random(128 / 8);
+  const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), secretKeyStr, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  });
+  return {
+    ciphertext: encrypted.ciphertext.toString(CryptoJS.enc.Base64),
+    iv: iv.toString(CryptoJS.enc.Base64)
+  };
+}
+
+const secretKey = 'Sio0J4c922So32PH'; // 确保密钥安全 
 axios.defaults.baseURL = constant.baseURL;
+
+axios.interceptors.request.use(
+  config => {
+    // 判断是否为POST请求且包含数据  
+    if (config.method === 'post' && config.data) {
+      // 加密数据  
+      // alert(JSON.stringify(config.data))
+      const encryptedData = encryptAES(config.data, secretKey);
+      // alert(encryptedData)
+      // 修改请求体为加密后的数据  
+      config.data = {
+        encryptedData: encryptedData.ciphertext,
+        iv: encryptedData.iv
+      };
+      const token = localStorage.getItem('userToken');
+      // 你可以在这里添加其他需要发送的头部信息，如Content-Type等  
+      config.headers['Content-Type'] = 'application/json';
+      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers['Content-Length'] = 200;
+    }
+    return config;
+  },
+  error => {
+    // 处理请求错误  
+    return Promise.reject(error);
+  }
+);
 
 
 // 添加请求拦截器
@@ -72,10 +115,18 @@ export default {
 
   get (url, params = {}, isAdmin = false) {
     let headers;
+    let config;
     if (isAdmin) {
-      headers = { "Authorization": localStorage.getItem("adminToken") };
+      config = {
+        headers: { "Authorization": localStorage.getItem("adminToken") },
+        timeout: 20000
+      }
     } else {
-      headers = { "Authorization": localStorage.getItem("userToken") };
+      config = {
+        headers: { "Authorization": localStorage.getItem("userToken") },
+        timeout: 20
+      }
+
     }
 
     return new Promise((resolve, reject) => {

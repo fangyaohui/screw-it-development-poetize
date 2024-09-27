@@ -15,10 +15,8 @@
         </el-input>
       </div>
       <div>
-        <proButton :info="'提交'"
-                   @click.native="login()"
-                   :before="$constant.before_color_2"
-                   :after="$constant.after_color_2">
+        <proButton :info="'提交'" @click.native="login()" :before="$constant.before_color_2"
+          :after="$constant.after_color_2">
         </proButton>
       </div>
     </div>
@@ -26,13 +24,13 @@
 </template>
 
 <script>
-  const proButton = () => import( "../common/proButton");
+  const proButton = () => import("../common/proButton");
 
   export default {
     components: {
       proButton
     },
-    data() {
+    data () {
       return {
         redirect: this.$route.query.redirect,
         account: "",
@@ -40,11 +38,11 @@
       }
     },
     computed: {},
-    created() {
+    created () {
 
     },
     methods: {
-      login() {
+      login () {
         if (this.$common.isEmpty(this.account) || this.$common.isEmpty(this.password)) {
           this.$message({
             message: "请输入账号或密码！",
@@ -54,10 +52,12 @@
         }
 
         let user = {
-          account: this.account.trim(),
-          password: this.$common.encrypt(this.password.trim()),
-          isAdmin: true
+          "account": this.account.trim(),
+          "password": this.$common.encrypt(this.password.trim()),
+          "isAdmin": true
         };
+
+
 
         this.$http.post(this.$constant.baseURL + "/user/login", user, true, false)
           .then((res) => {
@@ -66,7 +66,7 @@
               this.$store.commit("loadCurrentAdmin", res.data);
               this.account = "";
               this.password = "";
-              this.$router.push({path: this.redirect});
+              this.$router.push({ path: this.redirect });
             }
           })
           .catch((error) => {
@@ -81,7 +81,6 @@
 </script>
 
 <style scoped>
-
   .verify-container {
     height: 100vh;
     background: var(--backgroundPicture) center center / cover repeat;
@@ -93,19 +92,18 @@
     position: relative;
   }
 
-  .verify-content > div:first-child {
+  .verify-content>div:first-child {
     position: absolute;
     left: 50%;
     transform: translate(-50%);
     top: -25px;
   }
 
-  .verify-content > div:not(:first-child) {
+  .verify-content>div:not(:first-child) {
     margin: 25px 0;
   }
 
-  .verify-content > div:last-child > div {
+  .verify-content>div:last-child>div {
     margin: 0 auto;
   }
-
 </style>

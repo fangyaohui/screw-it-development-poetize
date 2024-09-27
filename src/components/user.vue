@@ -231,11 +231,11 @@
         }
 
         let user = {
-          account: this.account.trim(),
-          password: this.password.trim()
+          "account": this.account.trim(),
+          "password": this.password.trim()
         };
 
-        this.$http.post(this.$constant.baseURL + "/upm/login", user, false, false)
+        this.$http.post(this.$constant.baseURL + "/upm/login", user, false, true)
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.$store.commit("loadCurrentUser", res.data);
