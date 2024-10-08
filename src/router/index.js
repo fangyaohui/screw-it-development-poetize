@@ -60,6 +60,10 @@ const routes = [
       path: "/user",
       name: "user",
       component: () => import('../components/user')
+    }, { 
+      path: "/chat",
+      name: "Chat",
+      component: () => import('../view/Chat')
     }, {
       path: "/letter",
       name: "letter",

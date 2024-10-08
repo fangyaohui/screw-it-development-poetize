@@ -21,35 +21,36 @@ function encryptAES (data, secretKey) {
   };
 }
 
-const secretKey = 'Sio0J4c922So32PH'; // 确保密钥安全 
-axios.defaults.baseURL = constant.baseURL;
+// 对post请求进行加密
+// const secretKey = 'Sio0J4c922So32PH'; // 确保密钥安全 
+// axios.defaults.baseURL = constant.baseURL;
 
-axios.interceptors.request.use(
-  config => {
-    // 判断是否为POST请求且包含数据  
-    if (config.method === 'post' && config.data) {
-      // 加密数据  
-      // alert(JSON.stringify(config.data))
-      const encryptedData = encryptAES(config.data, secretKey);
-      // alert(encryptedData)
-      // 修改请求体为加密后的数据  
-      config.data = {
-        encryptedData: encryptedData.ciphertext,
-        iv: encryptedData.iv
-      };
-      const token = localStorage.getItem('userToken');
-      // 你可以在这里添加其他需要发送的头部信息，如Content-Type等  
-      config.headers['Content-Type'] = 'application/json';
-      config.headers['Authorization'] = `Bearer ${token}`;
-      config.headers['Content-Length'] = 200;
-    }
-    return config;
-  },
-  error => {
-    // 处理请求错误  
-    return Promise.reject(error);
-  }
-);
+// axios.interceptors.request.use(
+//   config => {
+//     // 判断是否为POST请求且包含数据  
+//     if (config.method === 'post' && config.data) {
+//       // 加密数据  
+//       // alert(JSON.stringify(config.data))
+//       const encryptedData = encryptAES(config.data, secretKey);
+//       // alert(encryptedData)
+//       // 修改请求体为加密后的数据  
+//       config.data = {
+//         encryptedData: encryptedData.ciphertext,
+//         iv: encryptedData.iv
+//       };
+//       const token = localStorage.getItem('userToken');
+//       // 你可以在这里添加其他需要发送的头部信息，如Content-Type等  
+//       config.headers['Content-Type'] = 'application/json';
+//       config.headers['Authorization'] = `Bearer ${token}`;
+//       config.headers['Content-Length'] = 200;
+//     }
+//     return config;
+//   },
+//   error => {
+//     // 处理请求错误  
+//     return Promise.reject(error);
+//   }
+// );
 
 
 // 添加请求拦截器

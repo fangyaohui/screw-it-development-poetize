@@ -240,6 +240,7 @@
             if (!this.$common.isEmpty(res.data)) {
               this.$store.commit("loadCurrentUser", res.data);
               localStorage.setItem("userToken", res.data.accessToken);
+              localStorage.setItem("user", res.data);
               this.account = "";
               this.password = "";
               this.$router.push({ path: '/' });
