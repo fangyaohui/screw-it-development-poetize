@@ -78,7 +78,7 @@
         this.active = index
         delete this.friendList[index].password
         this.$emit('set-contact', this.friendList[index])
-        alert(index)
+        // alert(index)
       },
       isActive (index) {
         return this.active === index

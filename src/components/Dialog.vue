@@ -153,8 +153,8 @@
           time: new Date()
         }
 
-        alert(JSON.stringify(entity))
-        alert(JSON.stringify(e))
+        // alert(JSON.stringify(entity))
+        // alert(JSON.stringify(e))
 
 
         this.socket.send(JSON.stringify(entity))
