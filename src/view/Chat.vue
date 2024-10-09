@@ -36,6 +36,7 @@
       set (user) {
 
         this.contact = user
+        alert(JSON.stringify(this.contact))
 
         this.$http.post(this.$constant.baseURL + "/chat/message/getMessage", {
           sendUser: JSON.parse(localStorage.getItem('currentUser')).id,

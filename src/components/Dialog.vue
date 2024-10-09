@@ -2,7 +2,8 @@
   <div v-if="contact" class="dialog">
     <div class="top">
       <div class="name">
-        {{ contact.userBName }}1
+        {{ contact.id }}
+        <!-- {{ concat.id}} -->
       </div>
     </div>
     <div class="middle" @mouseover="over" @mouseout="out">
