@@ -449,10 +449,10 @@
             });
           } else {
             let user = {
-              avatar: this.avatar.trim()
+              "avatar": this.avatar.trim()
             };
 
-            this.$http.post(this.$constant.baseURL + "/user/updateUserInfo", user)
+            this.$http.post(this.$constant.baseURL + "/upm/user/updateUserAvatarInfo", user)
               .then((res) => {
                 if (!this.$common.isEmpty(res.data)) {
                   this.$store.commit("loadCurrentUser", res.data);

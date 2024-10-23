@@ -85,7 +85,7 @@
             </li>
 
             <!-- 后台 -->
-            <li @click="goAdmin()">
+            <li @click="$router.push({path: '/myArticle'})">
               <div class="my-menu">
                 💻️ <span>个人博客</span>
               </div>
@@ -231,7 +231,7 @@
           </li>
 
           <!-- 后台 -->
-          <li @click="goAdmin()">
+          <li @click="goMyArticle()">
             <div>
               💻️ <span>个人博客</span>
             </div>
@@ -430,6 +430,10 @@
 
       goAdmin () {
         window.open(this.$constant.webURL + "/admin");
+      },
+
+      goMyArticle () {
+        window.open(this.$constant.webURL + "/myArticle");
       },
 
       logout () {

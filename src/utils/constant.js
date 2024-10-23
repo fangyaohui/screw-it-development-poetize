@@ -20,7 +20,7 @@ export default {
   hitokoto: "https://v1.hitokoto.cn",
   shehui: "https://api.oick.cn/yulu/api.php",
   tocbot: "https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js",
-  jinrishici: "https://v1.jinrishici.com/all.json",
+  // jinrishici: "https://v1.jinrishici.com/all.json",
   //前后端定义的密钥，AES使用16位
   cryptojs_key: "sarasarasarasara",
 

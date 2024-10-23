@@ -17,6 +17,10 @@ const routes = [
       name: "index",
       component: () => import('../components/index')
     }, {
+      path: "/index",
+      name: "index",
+      component: () => import('../components/index')
+    }, {
       path: "/sort",
       name: "sort",
       component: () => import('../components/sort')
@@ -60,10 +64,14 @@ const routes = [
       path: "/user",
       name: "user",
       component: () => import('../components/user')
-    }, { 
+    }, {
       path: "/chat",
       name: "Chat",
       component: () => import('../view/Chat')
+    }, {
+      path: "/myArticle",
+      name: "myArticle",
+      component: () => import('../components/myArticle')
     }, {
       path: "/letter",
       name: "letter",

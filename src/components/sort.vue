@@ -20,10 +20,10 @@
       <div class="article-wrap">
         <articleList :articleList="articles"></articleList>
         <div class="pagination-wrap">
-          <div @click="pageArticles()" class="pagination" v-if="pagination.total !== articles.length">
+          <!-- <div @click="pageArticles()" class="pagination" v-if="pagination.total !== articles.length">
             下一页
-          </div>
-          <div v-else style="user-select: none">
+          </div> -->
+          <div style="user-select: none">
             ~~到底啦~~
           </div>
         </div>

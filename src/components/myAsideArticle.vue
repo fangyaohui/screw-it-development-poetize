@@ -2,9 +2,9 @@
   <div>
     <div class="myAside-container">
       <!-- 网站信息 -->
-      <!-- <div v-if="!$common.mobile()" class="card-content1 shadow-box background-opacity">
-        <el-avatar style="margin-top: 20px" class="user-avatar" :size="120" :src="webInfo.avatar"></el-avatar>
-        <div class="web-name">{{webInfo.webName}}</div>
+      <div v-if="!$common.mobile()" class="card-content1 shadow-box background-opacity">
+        <el-avatar style="margin-top: 20px" class="user-avatar" :size="120" :src="user.avatar"></el-avatar>
+        <div class="web-name">{{user.username}}</div>
         <div class="web-info">
           <div class="blog-info-box">
             <span>文章</span>
@@ -22,10 +22,10 @@
         <a class="collection-btn" @click="showTip()">
           <i class="el-icon-star-off" style="margin-right: 2px"></i>朋友圈
         </a>
-      </div> -->
+      </div>
 
       <!-- 搜索 -->
-      <div style="padding: 15px;border-radius: 10px;animation: hideToShow 1s ease-in-out"
+      <!-- <div style="padding: 15px;border-radius: 10px;animation: hideToShow 1s ease-in-out"
         class="shadow-box background-opacity wow">
         <div style="color: var(--lightGreen);font-size: 20px;font-weight: bold;margin-bottom: 10px">
           搜索
@@ -43,7 +43,7 @@
             </svg>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- 推荐文章 -->
       <div v-if="!$common.isEmpty(recommendArticles)"
@@ -82,7 +82,7 @@
       </div>
 
       <!-- 速览 -->
-      <!-- <div v-if="!$common.mobile()" class="selectSort">
+      <div v-if="!$common.mobile()" class="selectSort">
         <div v-for="(sort, index) in sortInfo" @click="selectSort(sort)" :key="index"
           :style="{background: $constant.sortColor[index % $constant.sortColor.length]}"
           class="shadow-box-mini background-opacity wow"
@@ -95,10 +95,10 @@
             {{sort.sortDescription}}
           </div>
         </div>
-      </div> -->
+      </div>
 
       <!-- 分类 -->
-      <!-- <div class="shadow-box background-opacity wow" v-if="false"
+      <div class="shadow-box background-opacity wow" v-if="false"
         style="padding: 25px 25px 5px;border-radius: 10px;animation: hideToShow 1s ease-in-out">
         <div class="card-content2-title">
           <i class="el-icon-folder-opened card-content2-icon"></i>
@@ -110,10 +110,10 @@
             <span v-for="(s, i) in sort.sortName.split('')" :key="i">{{ s }}</span>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <!-- 赞赏 -->
-      <!-- <div class="shadow-box-mini background-opacity wow admire-box" v-if="!$common.isEmpty(admires) && false">
+      <div class="shadow-box-mini background-opacity wow admire-box" v-if="!$common.isEmpty(admires) && false">
         <div style="font-weight: bold;margin-bottom: 20px">🧨赞赏名单</div>
         <div>
           <vue-seamless-scroll :data="admires" style="height: 200px;overflow: hidden">
@@ -133,11 +133,11 @@
         <div class="admire-btn" @click="showAdmire()">
           赞赏
         </div>
-      </div> -->
+      </div>
     </div>
 
     <!-- 微信 -->
-    <!-- <el-dialog title="赞赏" :visible.sync="showAdmireDialog" width="25%" :append-to-body="true" destroy-on-close center>
+    <el-dialog title="赞赏" :visible.sync="showAdmireDialog" width="25%" :append-to-body="true" destroy-on-close center>
       <div>
         <div class="admire-image"></div>
         <div>
@@ -145,7 +145,7 @@
           <div class="admire-content">2. 申请通过后会加博客交流群，不需要加群或者退群后会定期清理好友（强迫症福利）</div>
         </div>
       </div>
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 
@@ -175,6 +175,9 @@
       },
       sortInfo () {
         return this.$store.getters.navigationBar;
+      },
+      user () {
+        return JSON.parse(localStorage.getItem('currentUser'))
       }
     },
     created () {

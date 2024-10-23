@@ -31,7 +31,7 @@
           </div>
           <div id="bannerWave1"></div>
           <div id="bannerWave2"></div>
-          <i class="el-icon-arrow-down" @click="navigation('.page-container-wrap')"></i>
+          <!-- <i class="el-icon-arrow-down" @click="navigation('.page-container-wrap')"></i> -->
         </div>
         <!-- 首页内容 -->
         <div class="page-container-wrap">
@@ -50,11 +50,11 @@
                 </div>
               </div>
 
-
-              <!-- <div v-for="(sort, index) in sortInfo" :key="index">
-                <div v-if="!$common.isEmpty(sortArticles[sort.id])">
-                  <div class="sort-article-first"> -->
-              <!-- <div>
+              <div v-show="indexType === 1">
+                <div v-for="(sort, index) in sortInfo" :key="index">
+                  <div v-if="!$common.isEmpty(sortArticles[sort.id])">
+                    <div class="sort-article-first">
+                      <div>
                         <svg viewBox="0 0 1024 1024" width="20" height="20"
                           style="vertical-align: -2px;margin-bottom: -2px">
                           <path
@@ -62,8 +62,8 @@
                             fill="#FF623E"></path>
                         </svg>
                         {{sort.sortName}}
-                      </div> -->
-              <!-- <div class="article-more" @click="$router.push({path: '/sort', query: {sortId: sort.id}})">
+                      </div>
+                      <div class="article-more" @click="$router.push({path: '/sort', query: {sortId: sort.id}})">
                         <svg viewBox="0 0 1024 1024" width="20" height="20"
                           style="vertical-align: -2px;margin-bottom: -2px">
                           <path
@@ -74,34 +74,14 @@
                             fill="#F9DB88"></path>
                         </svg>
                         MORE
-                      </div> -->
-              <!-- </div> -->
-              <!-- <p> {{ sort }}</p> -->
-              <!-- <sortArticle :articleList="articles">{{ articles }}</sortArticle> -->
-              <!-- </div> -->
-              <!-- </div> -->
-
-              <!-- <sortArticle :articleList="articles">{{ articles }}</sortArticle> -->
-
-              <div>
-                <!-- asdkfkalsfdj -->
-                <allArticle :articleList="articles"></allArticle>
+                      </div>
+                    </div>
+                    <sortArticle :articleList="sortArticles[sort.id]"></sortArticle>
+                  </div>
+                </div>
               </div>
 
-              <div class="pagination-container">
-
-                <!-- <sortArticle :articleList="articles">{{ articles }}</sortArticle> -->
-                <button class="pagination-button" :disabled="currentPage === 1" @click="prevPage">
-                  上一页
-                </button>
-                <!-- {{ articles }} -->
-                <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
-                <button class="pagination-button" :disabled="currentPage === totalPages" @click="nextPage">
-                  下一页
-                </button>
-              </div>
-
-              <!-- <div v-show="indexType === 2">
+              <div v-show="indexType === 2">
                 <articleList :articleList="articles"></articleList>
                 <div class="pagination-wrap">
                   <div @click="pageArticles()" class="pagination" v-if="pagination.total !== articles.length">
@@ -111,7 +91,7 @@
                     ~~到底啦~~
                   </div>
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -187,11 +167,9 @@
   const zombie = () => import("./common/zombie");
   const printer = () => import("./common/printer");
   const articleList = () => import("./articleList");
-  // const sortArticle = () => import("./common/allArticle");
+  const sortArticle = () => import("./common/sortArticle");
   const myFooter = () => import("./common/myFooter");
-  const myAside = () => import("./myAside");
-
-  import allArticle from './common/allArticle.vue'
+  const myAside = () => import("./myAsideArticle");
 
   export default {
     components: {
@@ -199,18 +177,14 @@
       zombie,
       printer,
       articleList,
-      // sortArticle,
+      sortArticle,
       myFooter,
-      myAside,
-      allArticle
+      myAside
     },
 
     data () {
       return {
         pushDialogVisible: false,
-        pageSize: 6,
-        currentPage: 1,
-        totalPages: 1, // 假设总页数为5
         push: {},
         loading: false,
         showAside: true,
@@ -238,19 +212,14 @@
     watch: {},
 
     created () {
-      this.currentPage = this.$route.query.currentPage || 1; // 如果参数不存在，默认返回1
       this.getGuShi();
-      // this.getSortArticles();
-      this.getArticles();
+      this.getSortArticles();
     },
 
     computed: {
       sortInfo () {
         return this.$store.state.sortInfo;
-      },
-      // currentPage () {
-      //   return this.$route.query.currentPage || 1; // 如果参数不存在，默认返回1
-      // }
+      }
     },
 
     mounted () {
@@ -266,24 +235,6 @@
     },
 
     methods: {
-      // async getArticleList() {
-      //   await 
-      // },
-      prevPage () {
-        if (this.currentPage > 1) {
-          this.currentPage--;
-          // this.getArticles();
-          window.location.href = `http://localhost:13628/index?currentPage=${this.currentPage}`;
-          // this.$router.push({ path: '/index', query: { currentPage: this.currentPage } });
-        }
-      },
-      nextPage () {
-        if (this.currentPage < this.totalPages) {
-          this.currentPage++;
-          // this.getArticles();
-          window.location.href = `http://localhost:13628/index?currentPage=${this.currentPage}`;
-        }
-      },
       async selectSort (sort) {
         this.pagination = {
           current: 1,
@@ -293,8 +244,8 @@
           sortId: sort.id,
           articleSearch: ""
         };
-        // this.articles = [];
-        // await this.getArticles();
+        this.articles = [];
+        await this.getArticles();
         this.$nextTick(() => {
           this.indexType = 2;
           $(".announcement").css("max-width", "780px");
@@ -314,8 +265,8 @@
           sortId: null,
           articleSearch: articleSearch
         };
-        // this.articles = [];
-        // await this.getArticles();
+        this.articles = [];
+        await this.getArticles();
         this.$nextTick(() => {
           this.indexType = 2;
           $(".announcement").css("max-width", "780px");
@@ -326,20 +277,16 @@
           });
         });
       },
-      // pageArticles () {
-      //   this.pagination.current = this.pagination.current + 1;
-      //   this.getArticles();
-      // },
+      pageArticles () {
+        this.pagination.current = this.pagination.current + 1;
+        this.getArticles();
+      },
 
       async getArticles () {
-        await this.$http.post(this.$constant.baseURL + "/blog/article/getPageArticle", {
-          "current": this.currentPage,
-          "size": this.pageSize
-        })
+        await this.$http.post(this.$constant.baseURL + "/blog/article/getListArticle", this.pagination)
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
-              this.articles = res.data.records;
-              this.totalPages = Math.ceil(res.data.total / this.pageSize);
+              this.articles = this.articles.concat(res.data.records);
               this.pagination.total = res.data.total;
             }
           })
@@ -694,39 +641,5 @@
     h1 {
       font-size: 35px;
     }
-  }
-
-  .pagination-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-    font-family: 'KaiTi', serif;
-    /* 使用楷体 */
-    font-size: 20px;
-    /* 较大字体 */
-  }
-
-  .pagination-button {
-    border: none;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    padding: 10px 20px;
-    margin: 0 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .pagination-button:disabled {
-    background-color: #e0e0e0;
-    cursor: not-allowed;
-  }
-
-  .pagination-button:not(:disabled):hover {
-    background-color: #d0d0d0;
-  }
-
-  .page-info {
-    margin: 0 10px;
   }
 </style>
