@@ -350,20 +350,6 @@
             });
           });
       },
-      getSortArticles () {
-        this.$http.get(this.$constant.baseURL + "/blog/article/getListSortArticle")
-          .then((res) => {
-            if (!this.$common.isEmpty(res.data)) {
-              this.sortArticles = res.data;
-            }
-          })
-          .catch((error) => {
-            this.$message({
-              message: error.message,
-              type: "error"
-            });
-          });
-      },
       navigation (selector) {
         let pageId = document.querySelector(selector);
         window.scrollTo({

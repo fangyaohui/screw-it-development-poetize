@@ -8,15 +8,15 @@
         <div class="web-info">
           <div class="blog-info-box">
             <span>文章</span>
-            <span class="blog-info-num">{{ $store.getters.articleTotal }}</span>
+            <span class="blog-info-num">{{ userBlogInfo.articleCount }}</span>
           </div>
           <div class="blog-info-box">
-            <span>分类</span>
-            <span class="blog-info-num">{{ sortInfo.length }}</span>
+            <span>点赞</span>
+            <span class="blog-info-num">{{ userBlogInfo.likeCount }}</span>
           </div>
           <div class="blog-info-box">
             <span>访问量</span>
-            <span class="blog-info-num">{{ webInfo.historyAllCount }}</span>
+            <span class="blog-info-num">{{ userBlogInfo.viewCount }}</span>
           </div>
         </div>
         <a class="collection-btn" @click="showTip()">
@@ -158,6 +158,8 @@
     },
     data () {
       return {
+        articleTotal: 0,
+        userBlogInfo: {},
         pagination: {
           current: 1,
           size: 5,
@@ -178,11 +180,13 @@
       },
       user () {
         return JSON.parse(localStorage.getItem('currentUser'))
-      }
+      },
+
     },
     created () {
       this.getRecommendArticles();
       this.getAdmire();
+      this.getUserBlogInfo();
     },
     methods: {
       selectSort (sort) {
@@ -207,6 +211,20 @@
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.admires = res.data;
+            }
+          })
+          .catch((error) => {
+            this.$message({
+              message: error.message,
+              type: "error"
+            });
+          });
+      },
+      getUserBlogInfo () {
+        this.$http.post(this.$constant.baseURL + "/blog/article/getUserBlogInfo")
+          .then((res) => {
+            if (!this.$common.isEmpty(res.data)) {
+              this.userBlogInfo = res.data;
             }
           })
           .catch((error) => {

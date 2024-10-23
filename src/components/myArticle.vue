@@ -50,7 +50,7 @@
                 </div>
               </div>
 
-              <div v-show="indexType === 1">
+              <!-- <div v-show="indexType === 1">
                 <div v-for="(sort, index) in sortInfo" :key="index">
                   <div v-if="!$common.isEmpty(sortArticles[sort.id])">
                     <div class="sort-article-first">
@@ -79,19 +79,26 @@
                     <sortArticle :articleList="sortArticles[sort.id]"></sortArticle>
                   </div>
                 </div>
+              </div> -->
+
+              <div>
+                <!-- asdkfkalsfdj -->
+                <allArticle :articleList="articles"></allArticle>
               </div>
 
-              <div v-show="indexType === 2">
-                <articleList :articleList="articles"></articleList>
-                <div class="pagination-wrap">
-                  <div @click="pageArticles()" class="pagination" v-if="pagination.total !== articles.length">
-                    下一页
-                  </div>
-                  <div v-else style="user-select: none">
-                    ~~到底啦~~
-                  </div>
-                </div>
+              <div class="pagination-container">
+
+                <!-- <sortArticle :articleList="articles">{{ articles }}</sortArticle> -->
+                <button class="pagination-button" :disabled="currentPage === 1" @click="prevPage">
+                  上一页
+                </button>
+                <!-- {{ articles }} -->
+                <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
+                <button class="pagination-button" :disabled="currentPage === totalPages" @click="nextPage">
+                  下一页
+                </button>
               </div>
+
             </div>
           </div>
         </div>
@@ -167,9 +174,10 @@
   const zombie = () => import("./common/zombie");
   const printer = () => import("./common/printer");
   const articleList = () => import("./articleList");
-  const sortArticle = () => import("./common/sortArticle");
+  // const sortArticle = () => import("./common/sortArticle");
   const myFooter = () => import("./common/myFooter");
   const myAside = () => import("./myAsideArticle");
+  import allArticle from './common/allArticle.vue'
 
   export default {
     components: {
@@ -177,7 +185,7 @@
       zombie,
       printer,
       articleList,
-      sortArticle,
+      allArticle,
       myFooter,
       myAside
     },
@@ -185,6 +193,9 @@
     data () {
       return {
         pushDialogVisible: false,
+        pageSize: 6,
+        currentPage: 1,
+        totalPages: 1, // 假设总页数为5
         push: {},
         loading: false,
         showAside: true,
@@ -205,7 +216,7 @@
           "category": ""
         },
         articles: [],
-        sortArticles: {}
+        // sortArticles: {}
       };
     },
 
@@ -213,7 +224,8 @@
 
     created () {
       this.getGuShi();
-      this.getSortArticles();
+      this.getArticles();
+      // this.getSortArticles();
     },
 
     computed: {
@@ -235,6 +247,21 @@
     },
 
     methods: {
+      prevPage () {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+          // this.getArticles();
+          window.location.href = `http://localhost:13628/index?currentPage=${this.currentPage}`;
+          // this.$router.push({ path: '/index', query: { currentPage: this.currentPage } });
+        }
+      },
+      nextPage () {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+          // this.getArticles();
+          window.location.href = `http://localhost:13628/index?currentPage=${this.currentPage}`;
+        }
+      },
       async selectSort (sort) {
         this.pagination = {
           current: 1,
@@ -255,6 +282,25 @@
             inline: "nearest"
           });
         });
+      },
+      async getArticles () {
+        await this.$http.post(this.$constant.baseURL + "/blog/article/getPageArticle", {
+          "current": this.currentPage,
+          "size": this.pageSize
+        })
+          .then((res) => {
+            if (!this.$common.isEmpty(res.data)) {
+              this.articles = res.data.records;
+              this.totalPages = Math.ceil(res.data.total / this.pageSize);
+              this.pagination.total = res.data.total;
+            }
+          })
+          .catch((error) => {
+            this.$message({
+              message: error.message,
+              type: "error"
+            });
+          });
       },
       async selectArticle (articleSearch) {
         this.pagination = {
@@ -283,7 +329,7 @@
       },
 
       async getArticles () {
-        await this.$http.post(this.$constant.baseURL + "/blog/article/getListArticle", this.pagination)
+        await this.$http.post(this.$constant.baseURL + "/blog/article/getPageArticleByUserId", this.pagination)
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.articles = this.articles.concat(res.data.records);
@@ -298,7 +344,9 @@
           });
       },
       getSortArticles () {
-        this.$http.get(this.$constant.baseURL + "/blog/article/getListSortArticle")
+        let userid = JSON.parse(localStorage.getItem('currentUser')).id;
+        // alert(userid);
+        this.$http.get(this.$constant.baseURL + "/blog/article/getListSortArticle/" + userid)
           .then((res) => {
             if (!this.$common.isEmpty(res.data)) {
               this.sortArticles = res.data;
@@ -641,5 +689,39 @@
     h1 {
       font-size: 35px;
     }
+  }
+
+  .pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    font-family: 'KaiTi', serif;
+    /* 使用楷体 */
+    font-size: 20px;
+    /* 较大字体 */
+  }
+
+  .pagination-button {
+    border: none;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .pagination-button:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+  }
+
+  .pagination-button:not(:disabled):hover {
+    background-color: #d0d0d0;
+  }
+
+  .page-info {
+    margin: 0 10px;
   }
 </style>

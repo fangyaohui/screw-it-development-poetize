@@ -17,7 +17,7 @@ if (screen.width > 768) {
     loadExternalResource(live2d_path + "live2d.min.js", "js")
   ]).then(() => {
     initWidget({
-      waifuPath: constant.baseURL + constant.waifuPath,
+      // waifuPath: constant.baseURL + constant.waifuPath,
       cdnPath: constant.cdnPath
     });
   });
@@ -75,7 +75,7 @@ function initWidget(config) {
 
 function loadWidget(config) {
   // 配置路径
-  let {waifuPath, cdnPath} = config;
+  // let {waifuPath, cdnPath} = config;
   if (!cdnPath.endsWith("/")) cdnPath += "/";
   let modelList, idx = 0;
 
