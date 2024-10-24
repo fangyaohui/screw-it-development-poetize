@@ -251,7 +251,7 @@
         if (this.currentPage > 1) {
           this.currentPage--;
           // this.getArticles();
-          window.location.href = `http://localhost:13628/index?currentPage=${this.currentPage}`;
+          window.location.href = `http://localhost:${window.location.port}/index?currentPage=${this.currentPage}`;
           // this.$router.push({ path: '/index', query: { currentPage: this.currentPage } });
         }
       },
@@ -259,7 +259,7 @@
         if (this.currentPage < this.totalPages) {
           this.currentPage++;
           // this.getArticles();
-          window.location.href = `http://localhost:13628/index?currentPage=${this.currentPage}`;
+          window.location.href = `http://localhost:${window.location.port}/index?currentPage=${this.currentPage}`;
         }
       },
       async selectSort (sort) {
@@ -272,7 +272,6 @@
           articleSearch: ""
         };
         this.articles = [];
-        await this.getArticles();
         this.$nextTick(() => {
           this.indexType = 2;
           $(".announcement").css("max-width", "780px");
@@ -284,7 +283,7 @@
         });
       },
       async getArticles () {
-        await this.$http.post(this.$constant.baseURL + "/blog/article/getPageArticle", {
+        await this.$http.post(this.$constant.baseURL + "/blog/article/getPageArticleByUserId", {
           "current": this.currentPage,
           "size": this.pageSize
         })
@@ -322,26 +321,6 @@
             inline: "nearest"
           });
         });
-      },
-      pageArticles () {
-        this.pagination.current = this.pagination.current + 1;
-        this.getArticles();
-      },
-
-      async getArticles () {
-        await this.$http.post(this.$constant.baseURL + "/blog/article/getPageArticleByUserId", this.pagination)
-          .then((res) => {
-            if (!this.$common.isEmpty(res.data)) {
-              this.articles = this.articles.concat(res.data.records);
-              this.pagination.total = res.data.total;
-            }
-          })
-          .catch((error) => {
-            this.$message({
-              message: error.message,
-              type: "error"
-            });
-          });
       },
       getSortArticles () {
         let userid = JSON.parse(localStorage.getItem('currentUser')).id;

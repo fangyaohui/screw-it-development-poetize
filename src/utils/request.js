@@ -74,6 +74,7 @@ axios.interceptors.response.use(function (response) {
       localStorage.removeItem("userToken");
       store.commit("loadCurrentAdmin", {});
       localStorage.removeItem("adminToken");
+      localStorage.removeItem("currentUser");
       window.location.href = constant.webURL + "/user";
     }
     return Promise.reject(new Error(response.data.message));
