@@ -223,6 +223,7 @@
     watch: {},
 
     created () {
+      this.currentPage = this.$route.query.currentPage || 1; // 如果参数不存在，默认返回1
       this.getGuShi();
       this.getArticles();
       // this.getSortArticles();
@@ -251,7 +252,7 @@
         if (this.currentPage > 1) {
           this.currentPage--;
           // this.getArticles();
-          window.location.href = `http://localhost:${window.location.port}/index?currentPage=${this.currentPage}`;
+          window.location.href = `http://localhost:${window.location.port}/myArticle?currentPage=${this.currentPage}`;
           // this.$router.push({ path: '/index', query: { currentPage: this.currentPage } });
         }
       },
@@ -259,7 +260,7 @@
         if (this.currentPage < this.totalPages) {
           this.currentPage++;
           // this.getArticles();
-          window.location.href = `http://localhost:${window.location.port}/index?currentPage=${this.currentPage}`;
+          window.location.href = `http://localhost:${window.location.port}/myArticle?currentPage=${this.currentPage}`;
         }
       },
       async selectSort (sort) {
