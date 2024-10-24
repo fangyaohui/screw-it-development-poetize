@@ -424,7 +424,8 @@
           });
         } else {
           let userToken = this.$common.encrypt(localStorage.getItem("userToken"));
-          window.open(window.location.host + "/chat");
+          window.location.href = `http://localhost:${window.location.port}/Chat`;
+          // window.open(window.location.host + "/Chat");
         }
       },
 
