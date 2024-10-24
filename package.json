@@ -12,6 +12,8 @@
     "core-js": "^3.6.5",
     "crypto-js": "^4.2.0",
     "element-ui": "^2.4.5",
+    "highlight.js": "^11.10.0",
+    "jquery": "^3.7.1",
     "markdown-it": "^12.2.0",
     "markdown-it-multimd-table": "^4.2.3",
     "mavon-editor": "^2.9.1",

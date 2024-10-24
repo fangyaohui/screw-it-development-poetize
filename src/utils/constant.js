@@ -16,11 +16,11 @@ export default {
 
   live2d_path: "https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/",
   cdnPath: "https://cdn.jsdelivr.net/gh/fghrsh/live2d_api/",
-  // waifuPath: "/webInfo/getWaifuJson",
+  waifuPath: "/webInfo/getWaifuJson",
   hitokoto: "https://v1.hitokoto.cn",
   shehui: "https://api.oick.cn/yulu/api.php",
   tocbot: "https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js",
-  // jinrishici: "https://v1.jinrishici.com/all.json",
+  jinrishici: "https://v1.jinrishici.com/all.json",
   //前后端定义的密钥，AES使用16位
   cryptojs_key: "sarasarasarasara",
 

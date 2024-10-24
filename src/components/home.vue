@@ -424,7 +424,7 @@
           });
         } else {
           let userToken = this.$common.encrypt(localStorage.getItem("userToken"));
-          window.open(this.$constant.imBaseURL + "chat");
+          window.open(window.location.host + "/chat");
         }
       },
 

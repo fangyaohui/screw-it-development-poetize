@@ -8,7 +8,7 @@ module.exports = {
   },
   lintOnSave: false,
   productionSourceMap: false,
-  publicPath: "./",
+  // publicPath: "./",
   configureWebpack: {
     plugins: [
       new CompressionPlugin({

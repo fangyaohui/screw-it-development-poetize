@@ -18,8 +18,13 @@ import './assets/css/color.css'
 import './assets/css/markdown-highlight.css'
 import './assets/css/font-awesome.min.css'
 import 'mavon-editor/dist/css/index.css'
+import $ from 'jquery'
 
-import {vueBaberrage} from 'vue-baberrage'
+
+
+import { vueBaberrage } from 'vue-baberrage'
+window.jQuery = $
+window.$ = $
 
 Vue.use(ElementUI)
 Vue.use(vueBaberrage)
