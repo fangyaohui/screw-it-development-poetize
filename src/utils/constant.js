@@ -1,11 +1,13 @@
 export default {
   // 测试环境
-  // baseURL: "http://localhost:8081",
-  baseURL: "http://localhost:61237/api",
-  // baseURL: "http://localhost:51234",
+  // baseURL: "http://localhost:61237/api",
+  // imBaseURL: "http://localhost:56281/websocket",
+  // webURL: "http://localhost",
 
-  imBaseURL: "http://localhost:13628/",
-  webURL: "http://localhost",
+  // 生产环境
+  baseURL: "http://1.94.101.104:54321/api",
+  imBaseURL: "http://1.94.101.104:6281/websocket",
+  webURL: "http://1.94.101.104",
 
   // 生产环境
   // webURL: location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : ''),

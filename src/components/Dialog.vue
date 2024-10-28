@@ -60,7 +60,7 @@
     },
     mounted () {
       // alert("fang")
-      this.socket = new WebSocket(`ws://localhost:56281/websocket/${JSON.parse(localStorage.getItem('currentUser')).id}`)
+      this.websocket = new WebSocket(this.$constant.imBaseURL + "/" + JSON.parse(localStorage.getItem('currentUser')).id);
       this.socket.onmessage = event => {
         this.msgList.push(JSON.parse(event.data))
       }

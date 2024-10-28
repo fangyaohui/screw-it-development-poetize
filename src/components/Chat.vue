@@ -291,8 +291,8 @@
         this.newMessage = '';
       },
       setupWebSocket () {
-        // this.socket = new WebSocket(`ws://localhost:56281/websocket/${JSON.parse(localStorage.getItem('currentUser')).id}`)
-        this.websocket = new WebSocket(`ws://localhost:56281/websocket/${JSON.parse(localStorage.getItem('currentUser')).id}`);
+        // this.socket = new WebSocket(`ws://1.94.101.104:6281/websocket/${JSON.parse(localStorage.getItem('currentUser')).id}`)
+        this.websocket = new WebSocket(this.$constant.imBaseURL + "/" + JSON.parse(localStorage.getItem('currentUser')).id);
 
         this.websocket.onmessage = (event) => {
 

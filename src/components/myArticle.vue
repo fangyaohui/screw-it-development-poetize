@@ -252,7 +252,7 @@
         if (this.currentPage > 1) {
           this.currentPage--;
           // this.getArticles();
-          window.location.href = `http://localhost:${window.location.port}/myArticle?currentPage=${this.currentPage}`;
+          window.location.href = `http://1.94.101.104:${window.location.port}/myArticle?currentPage=${this.currentPage}`;
           // this.$router.push({ path: '/index', query: { currentPage: this.currentPage } });
         }
       },
@@ -260,7 +260,7 @@
         if (this.currentPage < this.totalPages) {
           this.currentPage++;
           // this.getArticles();
-          window.location.href = `http://localhost:${window.location.port}/myArticle?currentPage=${this.currentPage}`;
+          window.location.href = `http://1.94.101.104:${window.location.port}/myArticle?currentPage=${this.currentPage}`;
         }
       },
       async selectSort (sort) {
