@@ -324,7 +324,8 @@
 
         let user = {
           username: this.currentUser.username,
-          gender: this.currentUser.gender
+          gender: this.currentUser.gender,
+          id: this.currentUser.id
         };
 
         if (!this.$common.isEmpty(this.currentUser.introduction)) {
@@ -337,7 +338,7 @@
           type: 'success',
           center: true
         }).then(() => {
-          this.$http.post(this.$constant.baseURL + "/user/updateUserInfo", user)
+          this.$http.post(this.$constant.baseURL + "/upm/user/updateUserInfo", user)
             .then((res) => {
               if (!this.$common.isEmpty(res.data)) {
                 this.$store.commit("loadCurrentUser", res.data);
@@ -449,10 +450,11 @@
             });
           } else {
             let user = {
-              "avatar": this.avatar.trim()
+              avatar: this.avatar.trim(),
+              id: this.currentUser.id
             };
 
-            this.$http.post(this.$constant.baseURL + "/upm/user/updateUserAvatarInfo", user)
+            this.$http.post(this.$constant.baseURL + "/upm/user/updateUserInfo", user)
               .then((res) => {
                 if (!this.$common.isEmpty(res.data)) {
                   this.$store.commit("loadCurrentUser", res.data);

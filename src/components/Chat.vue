@@ -11,7 +11,7 @@
       <div class="contact">
         <div class="top">
           <div class="left">
-            <img class="avatar" src="" alt="" />
+            <img class="avatar" :src="user.avatar" alt="用户头像" />
           </div>
 
           <div class="right">
@@ -58,7 +58,7 @@
           <div v-for="(friend, i) in friends" class="friend" :class="{activeColor: isActive(i)}"
             @click="selectFriend(friend)">
             <div class="left">
-              <img class="avatar" src="" alt="" />
+              <img class="avatar" :src="friend.avatar" alt="用户头像" />
             </div>
             <div class="right">
               {{ friend.userBName }}
@@ -86,8 +86,11 @@
             <div v-for="msg in msgList">
               <div class="msg"
                 :style="msg.sendUser === selectedFriend.userB ? 'flex-direction: row;' : 'flex-direction: row-reverse;'">
-                <div class="avatar">
-                  <img alt="" src="" />
+                <div class="avatar" v-if="msg.sendUser === selectedFriend.userB">
+                  <img alt="" :src="selectedFriend.avatar" />
+                </div>
+                <div class="avatar" v-else>
+                  <img alt="" :src="user.avatar" />
                 </div>
                 <div v-if="msg.sendUser === selectedFriend.userB" style="flex: 13;">
                   <div class="bubble-msg-left" style="margin-right: 75px;">
