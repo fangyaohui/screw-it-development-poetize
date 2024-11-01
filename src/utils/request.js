@@ -148,12 +148,12 @@ export default {
     if (isAdmin) {
       config = {
         headers: { "Authorization": localStorage.getItem("adminToken"), "Content-Type": "multipart/form-data" },
-        timeout: 60000
+        timeout: 600000
       };
     } else {
       config = {
         headers: { "Authorization": localStorage.getItem("userToken"), "Content-Type": "multipart/form-data" },
-        timeout: 60000
+        timeout: 600000
       };
     }
     if (typeof option !== "undefined") {
@@ -180,7 +180,7 @@ export default {
   uploadQiniu (url, param) {
     let config = {
       headers: { "Content-Type": "multipart/form-data" },
-      timeout: 60000
+      timeout: 600000
     };
 
     return new Promise((resolve, reject) => {
